@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.2.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.20.8"></script>
+</head>
+<body>
+  <div id="vis"/>
+  <script>
+    const spec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "US violent crime average rate per 100,000 people (2010-2020)",
+  "width": 800,
+  "height": 450,
+  "projection": {"type": "equalEarth"},
+  "data": {
+    "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/ne_110m.json",
+    "format": {
+      "type": "topojson",
+      "feature": "ne_110m_admin_1_states_provinces"
+    }
+  },
+  "transform": [
+    {
+      "lookup": "properties.name",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/us%20crime%20rate.csv"
+        },
+        "key": "country",
+        "fields": ["rate"]
+      }
+    },
+    {"calculate": "datum.Active + 0.1", "as": "Active Cases"}
+  ],
+  "mark": {"type": "geoshape"},
+  "encoding": {
+    "color": {
+      "field": "rate",
+      "type": "quantitative",
+      "scale": {"type": "log"}
+    },
+    "tooltip": [
+      {"field": "properties.name", "type": "nominal", "title": "country"},
+      {"field": "rate", "type": "quantitative"}
+    ]
+  },
+  "config": {}
+};
+    vegaEmbed("#vis", spec, {mode: "vega-lite"}).then(console.log).catch(console.warn);
+  </script>
+</body>
+</html>
