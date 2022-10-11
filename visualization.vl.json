@@ -11,15 +11,28 @@
       "feature": "ne_110m_admin_1_states_provinces"
     }
   },
+  "params": [
+    {
+      "name": "Year_selection",
+      "value": 2015,
+      "bind": {
+        "input": "range",
+        "min": 2010,
+        "max": 2020,
+        "step": 1,
+        "name": "Year: "
+      }
+    }
+  ],
   "transform": [
     {
       "lookup": "properties.name",
       "from": {
         "data": {
-          "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/us%20crime%20rate.csv"
+          "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/filter_rate.csv"
         },
-        "key": "country",
-        "fields": ["rate"]
+        "key": "countries",
+        "fields": ["total_rate"]
       }
     },
     {"calculate": "datum.Active + 0.1", "as": "Active Cases"}
@@ -27,13 +40,13 @@
   "mark": {"type": "geoshape"},
   "encoding": {
     "color": {
-      "field": "rate",
+      "field": "total_rate",
       "type": "quantitative",
       "scale": {"type": "log"}
     },
     "tooltip": [
       {"field": "properties.name", "type": "nominal", "title": "country"},
-      {"field": "rate", "type": "quantitative"}
+      {"field": "total_rate", "type": "quantitative"}
     ]
   },
   "config": {}
