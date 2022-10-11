@@ -32,10 +32,11 @@
           "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/filter_rate.csv"
         },
         "key": "countries",
-        "fields": ["total_rate"]
+        "fields": ["total_rate", "year"]
       }
     },
-    {"calculate": "datum.Active + 0.1", "as": "Active Cases"}
+    {"calculate": "datum.Active + 0.1", "as": "Active Cases"},
+    {"filter": "datum.year == Year_selection"}
   ],
   "mark": {"type": "geoshape"},
   "encoding": {
