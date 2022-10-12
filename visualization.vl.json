@@ -1,54 +1,88 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "US violent crime average rate per 100,000 people (2010-2020)",
-  "width": 800,
-  "height": 450,
-  "projection": {"type": "albersUsa"},
+  "title": "Crime rate in the US by state (2010-2020)",
+  "width": "container",
+  "height": 500,
   "params": [
     {
       "name": "Year_selection",
-      "value": 2015,
+      "value": 2018,
       "bind": {
         "input": "range",
         "min": 2010,
         "max": 2020,
         "step": 1,
-        "name": "Year: "
+        "name": "Year:  "
       }
     }
   ],
-  "data": {
-    "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/filter_rate.csv"
-  },
-  "transform": [
+  "projection": {"type": "albersUsa"},
+  "layer": [
     {
-      "lookup": "country",
-      "from": {
-        "data": {
-          "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/ne_110m.json",
-          "format": {
-            "type": "topojson",
-            "feature": "ne_110m_admin_1_states_provinces"
-          }
+      "data": {
+        "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/ne_110m.json",
+        "format": {
+          "type": "topojson",
+          "feature": "ne_110m_admin_1_states_provinces"
+        }
+      },
+      "transform": [
+        {
+          "calculate": "'Data is not available in ' + datum.properties.name",
+          "as": "note"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "fill": "#ddd",
+        "stroke": "white",
+        "strokeWidth": 1
+      },
+      "encoding": {"tooltip": {"field": "note"}}
+    },
+    {
+      "data": {
+        "url": "https://github.com/y-shash/US-crime-history-data-visualisation/blob/main/filter_rate.csv"
+      },
+      "transform": [
+        {
+          "lookup": "country",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/ne_110m.json",
+              "format": {
+                "type": "topojson",
+                "feature": "ne_110m_admin_1_states_provinces"
+              }
+            },
+            "key": "properties.name"
+          },
+          "as": "geo"
         },
-        "key": "properties.name",
-        "fields": ["total_rate", "year"]
+        {"filter": "datum.year == Year_selection"}
+      ],
+      "mark": {"type": "geoshape", "stroke": "#fff", "strokeWidth": 0.5},
+      "encoding": {
+        "shape": {"field": "geo", "type": "geojson"},
+        "color": {
+          "field": "rate",
+          "type": "quantitative",
+          "title": "Rate",
+          "scale": {"domain": [100, 900], "scheme": "reds"},
+          "legend": {"format": ".2s"}
+        },
+        "tooltip": [
+          {"field": "country", "type": "nominal", "title": "State"},
+          {
+            "field": "rate",
+            "type": "quantitative",
+            "title": "Rate/100k",
+            "format": ","
+          },
+          {"field": "year", "type": "quantitative", "title": "Year"}
+        ]
       }
-    },
-    {"calculate": "datum.total_rate + 0.1", "as": "Total Rate"},
-    {"filter": "datum.year == Year_selection"}
+    }
   ],
-  "mark": {"type": "geoshape"},
-  "encoding": {
-    "color": {
-      "field": "total_rate",
-      "type": "quantitative",
-      "scale": {"type": "log"}
-    },
-    "tooltip": [
-      {"field": "properties.name", "type": "nominal", "title": "country"},
-      {"field": "total_rate", "type": "quantitative"}
-    ]
-  },
   "config": {}
 }
