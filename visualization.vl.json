@@ -4,13 +4,6 @@
   "width": 800,
   "height": 450,
   "projection": {"type": "albersUsa"},
-  "data": {
-    "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/ne_110m.json",
-    "format": {
-      "type": "topojson",
-      "feature": "ne_110m_admin_1_states_provinces"
-    }
-  },
   "params": [
     {
       "name": "Year_selection",
@@ -24,18 +17,25 @@
       }
     }
   ],
+  "data": {
+    "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/filter_rate.csv"
+  },
   "transform": [
     {
-      "lookup": "properties.name",
+      "lookup": "country",
       "from": {
         "data": {
-          "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/filter_rate.csv"
+          "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/ne_110m.json",
+          "format": {
+            "type": "topojson",
+            "feature": "ne_110m_admin_1_states_provinces"
+          }
         },
-        "key": "countries",
+        "key": "properties.name",
         "fields": ["total_rate", "year"]
       }
     },
-    {"calculate": "datum.Active + 0.1", "as": "Active Cases"},
+    {"calculate": "datum.total_rate + 0.1", "as": "Total Rate"},
     {"filter": "datum.year == Year_selection"}
   ],
   "mark": {"type": "geoshape"},
