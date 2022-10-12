@@ -1,0 +1,91 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/Offender-Age10_9_2022.csv"
+  },
+  "params": [
+    {"name": "highlight", "select": {"type": "point", "on": "mouseover"}},
+    {"name": "select", "select": "point"}
+  ],
+  "hconcat": [
+    {
+      "width": 300,
+      "height": 500,
+      "transform": [
+        {
+          "aggregate": [{"op": "sum", "field": "victim", "as": "Victim"}],
+          "groupby": ["key"]
+        },
+        {
+          "window": [{"op": "rank", "as": "rank"}],
+          "sort": [{"field": "Victim", "order": "ascending"}]
+        },
+        {"filter": "datum.rank <= 11", "as": "key"}
+      ],
+      "mark": {"type": "bar", "stroke": "black", "cursor": "pointer"},
+      "title": "Victim Age Breakdown",
+      "encoding": {
+        "x": {
+          "aggregate": "sum",
+          "field": "Victim",
+          "type": "quantitative",
+          "title": "Number of victims",
+          "axis": {"domain": false, "grid": false, "ticks": false}
+        },
+        "y": {
+          "field": "key",
+          "type": "ordinal",
+          "sort": {"op": "sum", "field": "Victim", "order": "ascending"}
+        },
+        "fillOpacity": {
+          "condition": {"param": "select", "value": 1},
+          "value": 0.3
+        },
+        "tooltip": [
+          {"field": "key", "type": "ordinal"},
+          {"field": "Victim", "type": "quantitative", "format": ","}
+        ]
+      }
+    },
+    {
+      "width": 300,
+      "height": 500,
+      "transform": [
+        {
+          "aggregate": [{"op": "sum", "field": "offender", "as": "Offender"}],
+          "groupby": ["key"]
+        },
+        {
+          "window": [{"op": "rank", "as": "rank"}],
+          "sort": [{"field": "Offender", "order": "ascending"}]
+        },
+        {"filter": "datum.rank <= 11", "as": "key"}
+      ],
+      "mark": {"type": "bar", "stroke": "black", "cursor": "pointer"},
+      "title": "Offender Age Breakdown",
+      "encoding": {
+        "x": {
+          "aggregate": "sum",
+          "field": "Offender",
+          "type": "quantitative",
+          "title": "Number of offenders",
+          "axis": {"domain": false, "grid": false, "ticks": false}
+        },
+        "y": {
+          "field": "key",
+          "type": "nominal",
+          "sort": {"op": "sum", "field": "Offender", "order": "ascending"}
+        },
+        "fillOpacity": {
+          "condition": {"param": "select", "value": 1},
+          "value": 0.3
+        },
+        "tooltip": [
+          {"field": "key", "type": "nominal"},
+          {"field": "Offender", "type": "quantitative", "format": ","}
+        ]
+      }
+    }
+  ],
+  "config": {}
+}
