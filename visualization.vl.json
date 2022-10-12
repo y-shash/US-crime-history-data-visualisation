@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Crime rate in the US by state (2010-2020)",
-  "width": "container",
+  "width": "700",
   "height": 500,
   "params": [
     {
@@ -42,7 +42,7 @@
     },
     {
       "data": {
-        "url": "https://github.com/y-shash/US-crime-history-data-visualisation/blob/main/filter_rate.csv"
+        "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/filter_rate.csv"
       },
       "transform": [
         {
