@@ -14,13 +14,13 @@
       "transform": [
         {
           "aggregate": [{"op": "sum", "field": "victim", "as": "Victim"}],
-          "groupby": ["key"]
+          "groupby": ["Age"]
         },
         {
           "window": [{"op": "rank", "as": "rank"}],
           "sort": [{"field": "Victim", "order": "ascending"}]
         },
-        {"filter": "datum.rank <= 11", "as": "key"}
+        {"filter": "datum.rank <= 11", "as": "Age"}
       ],
       "mark": {"type": "bar", "stroke": "black", "cursor": "pointer"},
       "title": "Victim Age Breakdown",
@@ -33,7 +33,7 @@
           "axis": {"domain": false, "grid": false, "ticks": false}
         },
         "y": {
-          "field": "key",
+          "field": "Age",
           "type": "ordinal",
           "sort": {"op": "sum", "field": "Victim", "order": "ascending"}
         },
@@ -42,7 +42,7 @@
           "value": 0.3
         },
         "tooltip": [
-          {"field": "key", "type": "ordinal"},
+          {"field": "Age", "type": "ordinal"},
           {"field": "Victim", "type": "quantitative", "format": ","}
         ]
       }
@@ -53,13 +53,13 @@
       "transform": [
         {
           "aggregate": [{"op": "sum", "field": "offender", "as": "Offender"}],
-          "groupby": ["key"]
+          "groupby": ["Age"]
         },
         {
           "window": [{"op": "rank", "as": "rank"}],
           "sort": [{"field": "Offender", "order": "ascending"}]
         },
-        {"filter": "datum.rank <= 11", "as": "key"}
+        {"filter": "datum.rank <= 11", "as": "Age"}
       ],
       "mark": {"type": "bar", "stroke": "black", "cursor": "pointer"},
       "title": "Offender Age Breakdown",
@@ -72,7 +72,7 @@
           "axis": {"domain": false, "grid": false, "ticks": false}
         },
         "y": {
-          "field": "key",
+          "field": "Age",
           "type": "nominal",
           "sort": {"op": "sum", "field": "Offender", "order": "ascending"}
         },
@@ -81,7 +81,7 @@
           "value": 0.3
         },
         "tooltip": [
-          {"field": "key", "type": "nominal"},
+          {"field": "Age", "type": "nominal"},
           {"field": "Offender", "type": "quantitative", "format": ","}
         ]
       }
