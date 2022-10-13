@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Crime rate in the US by state (2010-2020)",
+  
   "width": "700",
   "height": 500,
   "params": [
@@ -61,14 +61,14 @@
         },
         {"filter": "datum.year == Year_selection"}
       ],
-      "mark": {"type": "geoshape", "stroke": "#fff", "strokeWidth": 0.5},
+      "mark": {"type": "geoshape", "stroke": "#000000", "strokeWidth": 0.5},
       "encoding": {
         "shape": {"field": "geo", "type": "geojson"},
         "color": {
           "field": "rate",
           "type": "quantitative",
           "title": "Rate",
-          "scale": {"domain": [100, 900], "scheme": "reds"},
+          "scale": {"domain": [100, 900], "scheme": "blues"},
           "legend": {"format": ".2s"}
         },
         "tooltip": [
