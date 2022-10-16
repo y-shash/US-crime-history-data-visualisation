@@ -9,8 +9,8 @@
   ],
   "hconcat": [
     {
-      "width": 300,
-      "height": 500,
+      "width": 250,
+      "height": 300,
       "transform": [
         {
           "aggregate": [{"op": "sum", "field": "victim", "as": "Victim"}],
@@ -48,8 +48,8 @@
       }
     },
     {
-      "width": 300,
-      "height": 500,
+      "width": 250,
+      "height": 300,
       "transform": [
         {
           "aggregate": [{"op": "sum", "field": "offender", "as": "Offender"}],

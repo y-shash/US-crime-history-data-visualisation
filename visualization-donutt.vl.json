@@ -1,0 +1,19 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/Location-Type10_16_2022.csv"
+  },
+  "title": "Crime Location",
+  "width": 500,
+  "height": 300,
+  "mark": {"type": "arc", "innerRadius": 50},
+  "encoding": {
+    "theta": {"field": "value", "type": "quantitative"},
+    "color": {"field": "location", "type": "nominal"},
+    "tooltip": [
+      {"field": "value", "type": "quantitative"},
+      {"field": "location", "type": "nominal"}
+    ]
+  },
+  "config": {}
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Google's stock price over time.",
+  "data": {
+    "url": "https://raw.githubusercontent.com/y-shash/US-crime-history-data-visualisation/main/Data10_15_2022.csv"
+  },
+  "title": "USA crime rate between 2010-2020",
+  "height": 300,
+  "width": 600,
+  "mark": {
+    "type": "line",
+    "point": {"filled": true, "size": 100, "color": "red"},
+    "color": "blue"
+  },
+  "encoding": {
+    "x": {"field": "year", "type": "temporal"},
+    "y": {
+      "field": "rate",
+      "type": "quantitative",
+      "scale": {"domain": [350, 450]}
+    },
+    "tooltip": [
+      {"field": "year", "type": "temporal"},
+      {"field": "rate", "type": "quantitative", "format": ","}
+    ]
+  },
+  "config": {}
+}
